@@ -1,0 +1,74 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define ll long long int
+#define vt vector<ll>
+#define pb push_back
+#define ff first
+#define ss second
+#define ii pair<int, int>
+#define vi vector<int>
+#define vii vector<ii>
+#define pll pair<ll,ll>
+#define vpl vector<pair<ll,ll>>
+#define cno cout<<"NO"<<endl
+#define cyes cout<<"YES"<<endl
+#define ct(t) cout<<t<<endl
+#define forn for(ll i=0;i<n;++i)
+#define forx(i,x) for(ll i=0;i<x;++i)
+#define fory(i,x,y) for(ll i=x;i<=y;++i)
+#define all(v) v.begin(),v.end()
+#define rall(v) v.rbegin(),v.rend()
+#define inp(a,n) for(ll i=0;i<n;++i) cin>>a[i];
+#define out(a,n) for(ll i=0;i<n;++i) {cout<<a[i]<<" ";} cout<<endl;
+#define INF 100000
+#define M (ll)(1e9+7)
+const int N=1e3+2;
+
+string a, b, c;
+ll n, m, o;
+vector<vt>dp( N, vt( N, -1) );
+ll rec(ll i, ll j, int k)
+{
+  if(k>=o)
+    return 0;
+  if(i>=n+1 || j>=m+1)
+    return INF;
+  if(dp[i][j]!=-1)
+    return dp[i][j];
+  ll ans=LLONG_MAX;
+  if(a[i]==c[k])
+    ans=min( ans, rec(i+1, j, k+1) );
+  if(b[j]==c[k])
+    ans=min( ans, rec(i, j+1, k+1) );
+
+  ans=min( ans, 1ll + rec(i+1, j, k+1) );
+  ans=min( ans, 1ll + rec(i, j+1, k+1) );
+  return dp[i][j]=ans;
+  return ans;
+
+}
+void solve()
+{
+   cin >> a >> b >> c;
+   n=a.size();
+   m=b.size();
+   o=n+m;
+   dp.assign( N, vt( N, -1) );
+   ct(rec(0, 0, 0));
+}
+int main()
+{
+    ios_base :: sync_with_stdio(0);
+    cin. tie(0); cout.tie(0);
+    
+    ll tc=1;
+    cin>>tc;
+
+    while(tc--)
+    {
+        solve();
+    }
+}
+
+
