@@ -1,0 +1,60 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define ll long long int
+const int N=1e5;
+
+int n;
+int dp[N];
+// vector<int>dp(N);
+int rec(int level)
+{
+	//pruning
+	if(level>n)
+		return 0;
+	//basecase
+	if(level==n)
+		return 1;
+
+	//giving stored ans
+	if(dp[level]!=-1)
+		return dp[level];
+
+	int ans=0;
+	//iterate through choices and check
+	for(int steps=1; steps<=3; steps++)
+	{
+		//check is carried done by pruning
+		//move
+		ans+=rec(level+steps);
+	}
+
+
+	//return
+	return dp[level]=ans;
+}
+
+void solve()
+{
+    cin >> n;
+    memset(dp, -1, sizeof(dp));
+    // dp.assign(n, -1);
+    cout << rec(1);
+}
+
+
+
+
+int main()
+{
+    ios_base :: sync_with_stdio(0);
+    cin. tie(0); cout.tie(0);
+    ll tc=1;
+    // cin>>tc;
+    while(tc--)
+    {
+        solve();
+    }
+}
+
+
