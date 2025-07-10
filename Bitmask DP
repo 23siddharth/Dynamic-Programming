@@ -1,0 +1,74 @@
+/*
+There are 
+N
+N ranks and 
+M
+M students in a class. Each student has a happiness value for the rank in the class he gets. The 
+i
+t
+h
+i 
+th
+  student gets 
+h
+a
+p
+p
+y
+[
+i
+]
+[
+j
+]
+happy[i][j] on getting a rank 
+j
+j. It's ok to not assign a rank to some students (they get 
+0
+0 happiness). At most one student can be assigned to a rank. The total happiness of the assignment can be calculated as the sum of happiness of each of the students in the class. Find the maximum total happiness that can be achieved by assigning students to ranks.
+*/
+
+#include<bits/stdc++.h>
+using namespace std;
+int n, m;
+int arr[51][11];
+int dp[51][(1<<10)];
+
+int rec(int level, int mask) {
+    if (level == m) {
+        return 0;
+    }
+    if (dp[level][mask] != -1) return dp[level][mask];
+
+    int ans = 0;
+
+    // Case 1: Skip assigning this student to any rank
+    ans = max(ans, rec(level + 1, mask));
+
+    // Case 2: Try assigning the student to an available rank
+    for (int i = 0; i < n; i++) {
+        if ((mask & (1 << i)) == 0) { // Check if rank i is available
+            ans = max(ans, arr[level][i] + rec(level + 1, (mask | (1 << i))));
+        }
+    }
+
+    return dp[level][mask] = ans;
+}
+int main()
+{
+    int t;
+    cin >> t;
+    while(t--)
+    {
+        cin >> n >> m;
+        for(int i=0; i<m; i++)
+        {
+            for(int j=0; j<n; j++)
+            {
+                cin >> arr[i][j];
+            }
+        }
+        memset(dp, -1, sizeof(dp));
+        cout << rec(0, 0) << endl;
+    }
+}
